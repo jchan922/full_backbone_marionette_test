@@ -7072,49 +7072,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// MarionetteJS 
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// Model - ToDo
-
-var Backbone = __webpack_require__(1);
-
-var ToDo = Backbone.Model.extend({
-    defaults: {
-        assignee: '',
-        text: '',
-    },
-
-    // A job shouldn't be added to the list unless it has some text and has been assigned to someone.
-    validate: function(attrs) {
-
-        var errors = {};
-        var hasError = false;
-
-        if (!attrs.assignee) {
-            errors.assignee = 'assignee must be set';
-            hasError = true;
-        }
-
-        if (!attrs.text) {
-            errors.text = 'text must be set';
-            hasError = true;
-        }
-
-        if (hasError) {
-            attrs.errors = errors;
-            return attrs;
-        }
-
-    }
-
-});
-
-// export this module so others can use
-module.exports = ToDo;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
 /* WEBPACK VAR INJECTION */(function(_) {
 // Application Layout
 var $ = __webpack_require__(10);
@@ -7124,6 +7081,7 @@ var Marionette = __webpack_require__(2);
 // Views
 var FormView = __webpack_require__(6);
 var ListView = __webpack_require__(7);
+var MyTemplateView = __webpack_require__(16);
 
 // App LayoutView object constructor
 var Layout = Marionette.LayoutView.extend({
@@ -7133,7 +7091,8 @@ var Layout = Marionette.LayoutView.extend({
 
     regions: {
         form: '.form',
-        list: '.list'
+        list: '.list',
+        myTemplate: '.myTemplate',
     },
 
     collectionEvents: {
@@ -7145,10 +7104,12 @@ var Layout = Marionette.LayoutView.extend({
         // create new FormView and ListView objects
         var formView = new FormView({model: this.model});
         var listView = new ListView({collection: this.collection});
+        var myTemplateView = new MyTemplateView();
 
         // set formView and listView to their regions
         this.showChildView('form', formView);
         this.showChildView('list', listView);
+        this.showChildView('myTemplate', myTemplateView);
     },
 
     onChildviewAddTodoItem: function(child) {
@@ -7194,6 +7155,49 @@ module.exports = Layout;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Model - ToDo
+
+var Backbone = __webpack_require__(1);
+
+var ToDo = Backbone.Model.extend({
+    defaults: {
+        assignee: '',
+        text: '',
+    },
+
+    // A job shouldn't be added to the list unless it has some text and has been assigned to someone.
+    validate: function(attrs) {
+
+        var errors = {};
+        var hasError = false;
+
+        if (!attrs.assignee) {
+            errors.assignee = 'assignee must be set';
+            hasError = true;
+        }
+
+        if (!attrs.text) {
+            errors.text = 'text must be set';
+            hasError = true;
+        }
+
+        if (hasError) {
+            attrs.errors = errors;
+            return attrs;
+        }
+
+    }
+
+});
+
+// export this module so others can use
+module.exports = ToDo;
+
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7204,10 +7208,11 @@ var Backbone = __webpack_require__(1);
 var Marionette = __webpack_require__(2);
 
 // Views
-var TodoView = __webpack_require__(4);
+var TodoView = __webpack_require__(3);
+var MyTemplate = __webpack_require__(16);
 
 // Models
-var ToDoModel = __webpack_require__(3);
+var ToDoModel = __webpack_require__(4);
 
 // Initial placeholder data that's hardcoded
 var initialData = [
@@ -28479,7 +28484,7 @@ return __p;
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='\r\n<!-- Layout Template -->\r\n\r\n<div class="list">\r\n    <!-- list.js renders module.exports = TodoList -->\r\n    <!-- TodoList is a stated ul that renders child ToDo items -->\r\n</div>\r\n\r\n<div class="form">\r\n    <!-- form.js renders module.exports = FormView -->\r\n\r\n</div>\r\n';
+__p+='\r\n<!-- Layout Template -->\r\n\r\n<h2>Part 2 - Getting Started</h2>\r\n<div class="list">\r\n    <!-- list.js renders module.exports = TodoList -->\r\n    <!-- TodoList is a stated ul that renders child ToDo items -->\r\n</div>\r\n\r\n<div class="form">\r\n    <!-- form.js renders module.exports = FormView -->\r\n\r\n</div>\r\n\r\n<h2>Part 3- Views</h2>\r\n<div class="myTemplate">\r\n\r\n</div>\r\n';
 }
 return __p;
 };
@@ -28528,6 +28533,49 @@ try {
 // easier to handle this case. if(!global) { ...}
 
 module.exports = g;
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+// Mytemplate View
+
+var Marionette = __webpack_require__(2);
+
+var MyTemplateView = Marionette.LayoutView.extend({
+    template: __webpack_require__(17),
+
+    events: {
+        'click .mybutton': 'alertBox'
+    },
+
+    alertBox: function() {
+        alert('Button Clicked');
+    }
+
+});
+
+module.exports = MyTemplateView;
+
+console.log("TEST")
+
+// view = new MyView();
+// view.render();
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='\r\n<!-- Mytemplate Template -->\r\n\r\n<div class="mytext">Some text to render</div>\r\n<input class="myinput" />\r\n<button class="mybutton" type="button">Click Me</button>\r\n';
+}
+return __p;
+};
 
 
 /***/ })

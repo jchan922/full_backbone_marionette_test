@@ -7,6 +7,7 @@ var Marionette = require('backbone.marionette');
 // Views
 var FormView = require('./form');
 var ListView = require('./list');
+var MyTemplateView = require('./mytemplate');
 
 // App LayoutView object constructor
 var Layout = Marionette.LayoutView.extend({
@@ -16,7 +17,8 @@ var Layout = Marionette.LayoutView.extend({
 
     regions: {
         form: '.form',
-        list: '.list'
+        list: '.list',
+        myTemplate: '.myTemplate',
     },
 
     collectionEvents: {
@@ -28,10 +30,12 @@ var Layout = Marionette.LayoutView.extend({
         // create new FormView and ListView objects
         var formView = new FormView({model: this.model});
         var listView = new ListView({collection: this.collection});
+        var myTemplateView = new MyTemplateView();
 
         // set formView and listView to their regions
         this.showChildView('form', formView);
         this.showChildView('list', listView);
+        this.showChildView('myTemplate', myTemplateView);
     },
 
     onChildviewAddTodoItem: function(child) {

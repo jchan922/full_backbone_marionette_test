@@ -6,6 +6,7 @@ var Marionette = require('backbone.marionette');
 
 // Views
 var TodoView = require('./views/layout');
+var MyTemplate = require('./views/mytemplate');
 
 // Models
 var ToDoModel = require('./models/todo');

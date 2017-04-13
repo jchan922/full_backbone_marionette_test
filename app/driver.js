@@ -1,57 +1,41 @@
+
+// Entry point for application
+
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 
-var ToDo = Marionette.LayoutView.extend({
-    tagName: 'li',
-    template: require('./templates/todoitem.html')
-})
+// Views
+var TodoView = require('./views/layout');
 
-var TodoList = Marionette.CompositeView.extend({
-    el: '#app-hook',
-    template: require('./templates/todolist.html'),
+// Models
+var ToDoModel = require('./models/todo');
 
-    childView: ToDo,
-    childViewContainer: 'ul',
+// Initial placeholder data that's hardcoded
+var initialData = [
+    {assignee: 'Scott', text: 'Write a book about Marionette'},
+    {assignee: 'Andrew', text: 'Do some coding'}
+];
 
-    ui: {
-        assignee: '#id_assignee',
-        form: 'form',
-        text: '#id_text'
-    },
+// Marionette.Application class
+    // Take pre-defined data from your page and feed it into your application
+    // Render your initial views
+    // Start the Backbone.history and initialize your application's Router
 
-    triggers: {
-        'submit @ui.form': 'add:todo:item'
-    },
+var app = new Marionette.Application({
 
-    collectionEvents: {
-      add: 'itemAdded'
-    },
-
-    onAddTodoItem: function() {
-        this.collection.add({
-            assignee: this.ui.assignee.val(),
-            text: this.ui.text.val()
+    // on app.start, render placeholder data initialData
+    onStart: function(options) {
+        var todo = new TodoView({
+            collection: new Backbone.Collection(options.initialData),
+            model: new ToDoModel()
         });
-    },
-
-    itemAdded: function() {
-        this.ui.text.val('');
-        this.ui.assignee.val('');
+        todo.render();
+        todo.triggerMethod('show');
+        console.log(todo);
     }
+
 });
 
-var todo = new TodoList({
-    collection: new Backbone.Collection([
-        {assignee: 'Scott', text: 'Write a book about Marionette'},
-        {assignee: 'Andrew', text: 'Do some coding'}
-    ])
-});
+app.start({initialData: initialData});
 
-todo.render();
-
-// 1 - Import Marionette
-// 2 - Create a new type of view called HelloWorld that borrows from the standard Marionette LayoutView. We'll go into more depth in that shortly.
-// 3 - We direct the view to the element we want to attach it to. This is a jQuery selector and we can use any valid jQuery selector here.
-// 4 - We must set a template to display to our users.
-// 5 - We must create an instance of our HelloWorld class before we can do anything useful with it.
-// 6 - Now the fun stuff begins and we call render() to display the template on the screen.
+console.log(app);

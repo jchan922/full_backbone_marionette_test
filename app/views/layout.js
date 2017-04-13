@@ -1,6 +1,6 @@
 
 // Application Layout
-
+var $ = require('jQuery');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 
@@ -35,11 +35,26 @@ var Layout = Marionette.LayoutView.extend({
     },
 
     onChildviewAddTodoItem: function(child) {
+        // clear error list
+        var errorList = $('#errors')
+        errorList.empty();
+
         // create model
         this.model.set({
             assignee: child.ui.assignee.val(),
             text: child.ui.text.val()
         }, {validate: true});
+
+        // if there are errors, append them to the error list
+        if (this.model.validationError) {
+            var errors = this.model.validationError.errors;
+
+            _.each(errors, function(value, key) {
+                errorList.append('<li>'+value+'</li>');
+            });
+
+            return false;
+        }
 
         // take new model keys/value pairs
         var items = this.model.pick('assignee', 'text');
@@ -53,16 +68,8 @@ var Layout = Marionette.LayoutView.extend({
             assignee: '',
             text: ''
         });
-    }
+    },
 
 });
 
 module.exports = Layout;
-
-
-// 1 - Import Marionette
-// 2 - Create a new type of view called HelloWorld that borrows from the standard Marionette LayoutView. We'll go into more depth in that shortly.
-// 3 - We direct the view to the element we want to attach it to. This is a jQuery selector and we can use any valid jQuery selector here.
-// 4 - We must set a template to display to our users.
-// 5 - We must create an instance of our HelloWorld class before we can do anything useful with it.
-// 6 - Now the fun stuff begins and we call render() to display the template on the screen.

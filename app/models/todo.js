@@ -2,7 +2,6 @@
 
 var Backbone = require('backbone');
 
-
 var ToDo = Backbone.Model.extend({
     defaults: {
         assignee: '',
@@ -11,6 +10,7 @@ var ToDo = Backbone.Model.extend({
 
     // A job shouldn't be added to the list unless it has some text and has been assigned to someone.
     validate: function(attrs) {
+
         var errors = {};
         var hasError = false;
 
@@ -25,7 +25,8 @@ var ToDo = Backbone.Model.extend({
         }
 
         if (hasError) {
-            return errors;
+            attrs.errors = errors;
+            return attrs;
         }
 
     }

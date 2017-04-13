@@ -31,11 +31,8 @@ var app = new Marionette.Application({
         });
         todo.render();
         todo.triggerMethod('show');
-        console.log(todo);
     }
 
 });
 
 app.start({initialData: initialData});
-
-console.log(app);

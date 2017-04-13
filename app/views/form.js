@@ -18,9 +18,9 @@ var FormView = Marionette.LayoutView.extend({
 
     ui: {
         assignee: '#id_assignee',
-        text: '#id_text'
+        text: '#id_text',
+        errors: '#errors'
     },
-
 });
 
 module.exports = FormView;

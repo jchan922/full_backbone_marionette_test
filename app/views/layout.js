@@ -1,6 +1,6 @@
 
 // Application Layout
-var $ = require('jQuery');
+var $ = require('jquery');
 var Backbone = require('backbone');
 var Marionette = require('backbone.marionette');
 
@@ -31,6 +31,7 @@ var Layout = Marionette.LayoutView.extend({
         var formView = new FormView({model: this.model});
         var listView = new ListView({collection: this.collection});
         var myTemplateView = new MyTemplateView();
+
 
         // set formView and listView to their regions
         this.showChildView('form', formView);

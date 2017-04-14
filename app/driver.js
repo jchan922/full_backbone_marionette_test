@@ -32,6 +32,7 @@ var app = new Marionette.Application({
         });
         todo.render();
         todo.triggerMethod('show');
+
     }
 
 });

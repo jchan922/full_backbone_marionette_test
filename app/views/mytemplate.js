@@ -1,18 +1,22 @@
 
-// Mytemplate View
+////// PART 3 //////
+console.log("PART 3 TEST");
 
+
+// Mytemplate View
 var Marionette = require('backbone.marionette');
 
 var MyTemplateView = Marionette.LayoutView.extend({
     template: require('../templates/mytemplate.html'),
 
+    // jQuery selectors stored as references
     ui: {
         content: '.mytext',
         input: '.myinput',
         save: '.mybutton'
     },
 
-    // // DOM events mapped with jQuery selectors
+    // DOM events mapped with jQuery selectors
     events: {
         // when you click .mybutton, run changeDiv method
         'click @ui.save': 'changeDiv'
@@ -28,5 +32,3 @@ var MyTemplateView = Marionette.LayoutView.extend({
 });
 
 module.exports = MyTemplateView;
-
-console.log("TEST")

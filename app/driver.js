@@ -6,7 +6,6 @@ var Marionette = require('backbone.marionette');
 
 // Views
 var TodoView = require('./views/layout');
-var MyTemplate = require('./views/mytemplate');
 
 // Models
 var ToDoModel = require('./models/todo');
@@ -16,6 +15,14 @@ var initialData = [
     {assignee: 'Scott', text: 'Write a book about Marionette'},
     {assignee: 'Andrew', text: 'Do some coding'}
 ];
+
+var collection = new Backbone.Collection([
+  {name: 'John Smith', gender: 'male', nationality: 'UK', url: '/items/1'},
+  {name: 'Jane Doe', gender: 'female', nationality: 'USA', url: '/items/4'}
+]);
+
+console.log(initialData);
+console.log(collection);
 
 // Marionette.Application class
     // Take pre-defined data from your page and feed it into your application
@@ -32,7 +39,6 @@ var app = new Marionette.Application({
         });
         todo.render();
         todo.triggerMethod('show');
-
     }
 
 });

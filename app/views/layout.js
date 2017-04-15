@@ -32,7 +32,6 @@ var Layout = Marionette.LayoutView.extend({
         var listView = new ListView({collection: this.collection});
         var myTemplateView = new MyTemplateView();
 
-
         // set formView and listView to their regions
         this.showChildView('form', formView);
         this.showChildView('list', listView);

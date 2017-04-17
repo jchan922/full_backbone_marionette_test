@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1641,7 +1641,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscor
 
   // Set up Backbone appropriately for the environment. Start with AMD.
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(4), exports], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, $, exports) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(3), exports], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, $, exports) {
       // Export global even in AMD case in case this script is loaded with
       // others that may still expect a global Backbone.
       root.Backbone = factory(root, exports, _, $);
@@ -7070,46 +7070,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// MarionetteJS 
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-////// PART 3 //////
-console.log("PART 3 TEST");
-
-
-// Mytemplate View
-var Marionette = __webpack_require__(2);
-
-var MyTemplateView = Marionette.LayoutView.extend({
-    template: __webpack_require__(14),
-
-    // jQuery selectors stored as references
-    ui: {
-        content: '.mytext',
-        input: '.myinput',
-        save: '.mybutton'
-    },
-
-    // DOM events mapped with jQuery selectors
-    events: {
-        // when you click .mybutton, run changeDiv method
-        'click @ui.save': 'changeDiv'
-    },
-
-    // set .mytext to value of input
-    changeDiv: function() {
-        var text = this.$el.find('.myinput').val();
-        console.log("changeDiv", text);
-        this.$el.find('.mytext').text(text);
-    },
-
-});
-
-module.exports = MyTemplateView;
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -17369,7 +17329,7 @@ return jQuery;
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Model - ToDo
@@ -17412,19 +17372,19 @@ module.exports = ToDo;
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(_) {
 // Application Layout
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var Backbone = __webpack_require__(1);
 var Marionette = __webpack_require__(2);
 
 // Views
-var FormView = __webpack_require__(8);
-var ListView = __webpack_require__(9);
-var MyTemplateView = __webpack_require__(3);
+var FormView = __webpack_require__(7);
+var ListView = __webpack_require__(8);
+var MyTemplateView = __webpack_require__(9);
 
 // App LayoutView object constructor
 var Layout = Marionette.LayoutView.extend({
@@ -17498,7 +17458,7 @@ module.exports = Layout;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -17508,24 +17468,16 @@ var Backbone = __webpack_require__(1);
 var Marionette = __webpack_require__(2);
 
 // Views
-var TodoView = __webpack_require__(6);
+var TodoView = __webpack_require__(5);
 
 // Models
-var ToDoModel = __webpack_require__(5);
+var ToDoModel = __webpack_require__(4);
 
-// Initial placeholder data that's hardcoded
+// Initial placeholder data that's hardcoded to populate To Do list
 var initialData = [
     {assignee: 'Scott', text: 'Write a book about Marionette'},
     {assignee: 'Andrew', text: 'Do some coding'}
 ];
-
-var collection = new Backbone.Collection([
-  {name: 'John Smith', gender: 'male', nationality: 'UK', url: '/items/1'},
-  {name: 'Jane Doe', gender: 'female', nationality: 'USA', url: '/items/4'}
-]);
-
-console.log(initialData);
-console.log(collection);
 
 // Marionette.Application class
     // Take pre-defined data from your page and feed it into your application
@@ -17535,22 +17487,23 @@ console.log(collection);
 var app = new Marionette.Application({
 
     // on app.start, render placeholder data initialData
-    onStart: function(options) {
+    onStart: function(dataOnStart) {
         var todo = new TodoView({
-            collection: new Backbone.Collection(options.initialData),
-            model: new ToDoModel()
+            collection: new Backbone.Collection(dataOnStart.initialData),
+            model: new ToDoModel(),
         });
         todo.render();
         todo.triggerMethod('show');
+    console.log(todo);
     }
 
 });
 
-app.start({initialData: initialData});
+app.start({initialData: initialData, passedData: "Other data you want to pass on start"});
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -17582,7 +17535,7 @@ module.exports = FormView;
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -17605,6 +17558,46 @@ var TodoList = Marionette.CollectionView.extend({
 });
 
 module.exports = TodoList;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+////// PART 3 //////
+console.log("PART 3 TEST");
+
+
+// Mytemplate View
+var Marionette = __webpack_require__(2);
+
+var MyTemplateView = Marionette.LayoutView.extend({
+    template: __webpack_require__(14),
+
+    // jQuery selectors stored as references
+    ui: {
+        content: '.mytext',
+        input: '.myinput',
+        save: '.mybutton'
+    },
+
+    // DOM events mapped with jQuery selectors
+    events: {
+        // when you click .mybutton, run changeDiv method
+        'click @ui.save': 'changeDiv'
+    },
+
+    // set .mytext to value of input
+    changeDiv: function() {
+        var text = this.$el.find('.myinput').val();
+        console.log("changeDiv", text);
+        this.$el.find('.mytext').text(text);
+    },
+
+});
+
+module.exports = MyTemplateView;
 
 
 /***/ }),
